@@ -12,7 +12,7 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Form, Formik } from 'formik';
+import { Field, Form, Formik } from 'formik';
 import EditDocumentIcon from '@mui/icons-material/EditDocument';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -98,29 +98,29 @@ const StreamClass = () => {
                                 </IconButton>
 
                                 {/*....................................Form details ............................................*/}
+                                <DialogContent dividers>
+                                    <Formik>
+                                        <Form>
 
-                                <Formik>
-                                    <Form>
-                                    <DialogContent dividers>
-                                        <Autocomplete
-                                            disablePortal
-                                            options={options}
-                                            sx={{ width: 300 }}
-                                            renderInput={(params) => <TextField {...params} label="Class" />}
-                                        />
-                                    </DialogContent>
+                                            
 
-                                    <DialogContent dividers>
-                                        <Autocomplete
-                                            disablePortal
-                                            options={options}
-                                            sx={{ width: 300 }}
-                                            renderInput={(params) => <TextField {...params} label="Year" />}
-                                        />
+                                            <Autocomplete
+                                                disablePortal
+                                                options={options}
+                                                sx={{ width: 300, mb: 2 }}
+                                                renderInput={(params) => <TextField {...params} label="Stream/Class" />}
+                                            />
 
-                                    </DialogContent>
-</Form>
-                                </Formik>
+                                            <Field name="Year"
+
+                                                as={TextField}
+                                                label="Year"
+                                                sx={{ width: "100%", mb: 2 }}></Field>
+
+
+                                        </Form>
+                                    </Formik>
+                                </DialogContent>
 
 
 
@@ -154,12 +154,12 @@ const StreamClass = () => {
                             </thead>
                             <tbody>
                                 <tr style={{ textAlign: "center" }}>
-                                    <td>sa</td>
-                                    <td>sa</td>
-                                    <td>sa</td>
+                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>1</td>
+                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>Stream</td>
+                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>2016</td>
                                     <td><button style={{ border: "none", background: "none" }}><DeleteIcon sx={{ ":hover": { color: "rgb(255, 3, 3)" }, fontSize: "25px" }} /></button></td>
 
-                                    <td><button style={{ border: "none", background: "none" }}><EditDocumentIcon sx={{ ":hover": { color: "rgb(140, 7, 158)" }, fontSize: "25px" }}/></button></td>
+                                    <td><button style={{ border: "none", background: "none" }}><EditDocumentIcon sx={{ ":hover": { color: "rgb(140, 7, 158)" }, fontSize: "25px" }} /></button></td>
                                 </tr>
                             </tbody>
 
@@ -168,7 +168,7 @@ const StreamClass = () => {
 
 
                 </Grid>
-            </Home>
+            </Home >
         </>
     )
 }

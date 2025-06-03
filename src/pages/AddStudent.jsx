@@ -12,6 +12,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import { Field, Form, Formik } from 'formik';
+import EditDocumentIcon from '@mui/icons-material/EditDocument';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Switch from '@mui/material/Switch';
+
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -24,6 +29,8 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 const AddStudent = () => {
+
+
     const studentList = [];
     const [open, setOpen] = React.useState(false);
 
@@ -34,9 +41,13 @@ const AddStudent = () => {
         setOpen(false);
     };
     const options = [
-       
+
     ];
 
+    const label = { inputProps: { 'aria-label': 'Size switch demo' } };
+    
+
+    
     return (
         <>
 
@@ -96,12 +107,41 @@ const AddStudent = () => {
                                     <CloseIcon />
                                 </IconButton>
                                 <DialogContent dividers>
-                                    <Autocomplete
-                                        disablePortal
-                                        options={options}
-                                        sx={{ width: 300 }}
-                                        renderInput={(params) => <TextField {...params} label="Search Stream" />}
-                                    />
+
+                                    <Formik>
+                                        <Form>
+
+                                            
+                                            <Autocomplete
+                                                disablePortal
+                                                options={options}
+                                                sx={{ width: "100%", mb: 2 }}
+                                                renderInput={(params) => <TextField {...params} label="Full Name" />}
+                                            />
+
+                                            <Autocomplete
+                                                disablePortal
+                                                options={options}
+                                                sx={{ width: "100%", mb: 2 }}
+                                                renderInput={(params) => <TextField {...params} label="Select Stream" />}
+                                            />
+
+                                            <Field name="age"
+                                                type="number"
+                                                as={TextField}
+                                                label="Age"
+                                                sx={{ width: "100%", mb: 2 }}></Field>
+
+                                            <Field name="contact"
+
+                                                as={TextField}
+                                                label="Contact"
+                                                sx={{ width: "100%", mb: 2 }}></Field>
+
+
+
+                                        </Form>
+                                    </Formik>
                                 </DialogContent>
                                 <DialogActions>
                                     <Button variant='contained' autoFocus onClick={handleClose}>
@@ -118,26 +158,38 @@ const AddStudent = () => {
 
                     <Grid size={{ lg: 12, md: 12, sm: 12, xs: 12 }}>
 
-                        <table style={{ borderSpacing: "0px", width: "100%" ,textAlign:"center"}}>
+                        <table style={{ borderSpacing: "0px", width: "100%", textAlign: "center" }}>
                             <thead style={{ backgroundColor: "rgb(25, 118, 210)" }}>
 
                                 <tr>
-                                    <th style={{ padding:"20px 3px",color:"white",fontFamily:"math",fontSize: "14px" }}>No</th>
-                                    <th style={{padding:"20px 3px",color:"white",fontFamily:"math", fontSize: "14px" }}>Name</th>
-                                    <th style={{ padding:"20px 3px",color:"white",fontFamily:"math",fontSize: "14px" }}>Age</th>
-                                    <th style={{padding:"20px 3px",color:"white",fontFamily:"math", fontSize: "14px" }}>Contact</th>
-                                    <th style={{padding:"20px 3px",color:"white",fontFamily:"math", fontSize: "14px" }}>Active Status</th>
-                                    <th style={{padding:"20px 3px",color:"white",fontFamily:"math", fontSize: "14px" }} >Delete</th>
-                                    <th style={{padding:"20px 3px",color:"white",fontFamily:"math", fontSize: "14px" }}>Update</th>
+                                    <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>No</th>
+                                    <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Name</th>
+                                    <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Stream</th>
+                                    <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Contact</th>
+                                    <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Active Status</th>
+                                    <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }} >Delete</th>
+                                    <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Update</th>
                                 </tr>
 
 
                             </thead>
                             <tbody>
                                 <tr style={{ textAlign: "center" }}>
-                                    <td>sa</td>
-                                    <td>sa</td>
-                                    <td>sa</td>
+                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>No</td>
+                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>Maulik khambhdiya</td>
+                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>Stream</td>
+                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>7879898787</td>
+                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math" }}>
+                                         <Switch {...label} defaultChecked size="small" />
+                                    </td>
+
+                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math" }}>
+                                        <button style={{ border: "none", background: "none" }}><DeleteIcon sx={{ ":hover": { color: "rgb(255, 3, 3)" }, fontSize: "25px" }} /></button>
+                                    </td>
+
+                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math" }}>
+                                        <button style={{ border: "none", background: "none" }}><EditDocumentIcon sx={{ ":hover": { color: "rgb(140, 7, 158)" }, fontSize: "25px" }} /></button>
+                                    </td>
                                 </tr>
                             </tbody>
 
