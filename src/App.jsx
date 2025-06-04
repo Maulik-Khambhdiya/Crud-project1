@@ -1,4 +1,3 @@
-// import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 import './App.css';
 import Academyperformance from './pages/Academyperformance';
 import AddStudent from './pages/AddStudent';
@@ -14,13 +13,12 @@ import {
 
 
 function App() {
-  // const token = localStorage.getItem('token');
+
   return (
     <>
       <Router>
 
         <Switch>
-
 
           {/* <Route exact path="/">
             <Login></Login>
@@ -38,7 +36,6 @@ function App() {
             <AddStudent></AddStudent>
           </Route>
 
-
           <Route path="/academyperformance">
             <Academyperformance></Academyperformance>
           </Route>
@@ -46,12 +43,10 @@ function App() {
           <Route path="/feesdetails">
             <FeesDetails></FeesDetails>
           </Route>
+
         </Switch>
 
       </Router>
-
-
-
 
     </>
   );

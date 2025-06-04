@@ -102,8 +102,7 @@ const StreamClass = () => {
                                     <Formik>
                                         <Form>
 
-                                            
-
+                                        
                                             <Autocomplete
                                                 disablePortal
                                                 options={options}
@@ -111,8 +110,8 @@ const StreamClass = () => {
                                                 renderInput={(params) => <TextField {...params} label="Stream/Class" />}
                                             />
 
-                                            <Field name="Year"
-
+                                            <Field name="year"
+                                                type="number"
                                                 as={TextField}
                                                 label="Year"
                                                 sx={{ width: "100%", mb: 2 }}></Field>

@@ -42,7 +42,7 @@ const Academyperformance = () => {
     ];
 
     const label = { inputProps: { 'aria-label': 'Size switch demo' } };
-    
+
 
     return (
         <>
@@ -159,7 +159,7 @@ const Academyperformance = () => {
                         <table style={{ borderSpacing: "0px", width: "100%", textAlign: "center" }}>
                             <thead style={{ backgroundColor: "rgb(25, 118, 210)" }}>
 
-                                <tr style={{border:"1px solid black"}}>
+                                <tr style={{ border: "1px solid black" }}>
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>No</th>
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Name</th>
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Stream</th>
@@ -173,16 +173,16 @@ const Academyperformance = () => {
 
                             </thead>
                             <tbody>
-                                <tr style={{ textAlign: "center" ,border:"1px solid black"}}>
+                                <tr style={{ textAlign: "center", border: "1px solid black" }}>
                                     <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>No</td>
 
                                     <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>Maulik khambhdiya</td>
 
                                     <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>Stream</td>
 
-                                     <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>First</td>
+                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>First</td>
 
-                                      <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>Excellent</td>
+                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>Excellent</td>
 
                                     <td style={{ padding: "20px 3px", color: "black", fontFamily: "math" }}>
                                         <Switch {...label} defaultChecked size="small" />
