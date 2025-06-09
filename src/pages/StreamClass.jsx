@@ -110,10 +110,10 @@ const StreamClass = () => {
                                                 renderInput={(params) => <TextField {...params} label="Stream/Class" />}
                                             />
 
-                                            <Field name="year"
-                                                type="number"
+                                            <Field name="faculty"
+                                                type="text"
                                                 as={TextField}
-                                                label="Year"
+                                                label="Faculty"
                                                 sx={{ width: "100%", mb: 2 }}></Field>
 
 

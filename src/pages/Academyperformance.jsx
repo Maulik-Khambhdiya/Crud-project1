@@ -163,9 +163,9 @@ const Academyperformance = () => {
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>No</th>
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Name</th>
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Stream</th>
+                                    <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Faculty</th>
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Rank</th>
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Comments</th>
-                                    <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Active Status</th>
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }} >Delete</th>
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Update</th>
                                 </tr>
@@ -180,13 +180,13 @@ const Academyperformance = () => {
 
                                     <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>Stream</td>
 
+                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>sir</td>
+
                                     <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>First</td>
 
                                     <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>Excellent</td>
 
-                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math" }}>
-                                        <Switch {...label} defaultChecked size="small" />
-                                    </td>
+                                    
 
                                     <td style={{ padding: "20px 3px", color: "black", fontFamily: "math" }}>
                                         <button style={{ border: "none", background: "none" }}><DeleteIcon sx={{ ":hover": { color: "rgb(255, 3, 3)" }, fontSize: "25px" }} /></button>

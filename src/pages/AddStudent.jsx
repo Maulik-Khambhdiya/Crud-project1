@@ -45,9 +45,9 @@ const AddStudent = () => {
     ];
 
     const label = { inputProps: { 'aria-label': 'Size switch demo' } };
-    
 
-    
+
+
     return (
         <>
 
@@ -111,7 +111,7 @@ const AddStudent = () => {
                                     <Formik>
                                         <Form>
 
-                                            
+
                                             <Autocomplete
                                                 disablePortal
                                                 options={options}
@@ -165,6 +165,7 @@ const AddStudent = () => {
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>No</th>
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Name</th>
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Stream</th>
+                                    <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Details</th>
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Contact</th>
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Active Status</th>
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }} >Delete</th>
@@ -178,9 +179,14 @@ const AddStudent = () => {
                                     <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>No</td>
                                     <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>Maulik khambhdiya</td>
                                     <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>Stream</td>
+
+                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math" }}>
+                                        <button style={{backgroundColor:"violet",fontWeight:"bolder",border:"none",borderRadius:"30px",padding:"5px 10px"}}>Student Card</button>
+                                    </td>
+
                                     <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>7879898787</td>
                                     <td style={{ padding: "20px 3px", color: "black", fontFamily: "math" }}>
-                                         <Switch {...label} defaultChecked size="small" />
+                                        <Switch {...label} defaultChecked size="small" />
                                     </td>
 
                                     <td style={{ padding: "20px 3px", color: "black", fontFamily: "math" }}>
