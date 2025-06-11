@@ -1,5 +1,5 @@
-import { Box, Grid, Paper } from '@mui/material'
-import React from 'react'
+import { Box, Grid, InputLabel, Paper, Select, Typography } from '@mui/material'
+import React, { useState } from 'react'
 import FormControl from '@mui/material/FormControl';
 import Home from './Home';
 import TextField from '@mui/material/TextField';
@@ -40,9 +40,7 @@ const AddStudent = () => {
     const handleClose = () => {
         setOpen(false);
     };
-    const options = [
-
-    ];
+    
 
     const label = { inputProps: { 'aria-label': 'Size switch demo' } };
 
@@ -111,26 +109,47 @@ const AddStudent = () => {
                                     <Formik>
                                         <Form>
 
+                                            <FormControl fullWidth>
+                                                <InputLabel id="demo-simple-select-label">Full Name</InputLabel>
+                                                <Select
+                                                    labelId="demo-simple-select-label"
+                                                    id="demo-simple-select"
+                                                    sx={{ width: "100%", mb: 2 }}
+                                                    label="Full Name"
 
-                                            <Autocomplete
-                                                disablePortal
-                                                options={options}
-                                                sx={{ width: "100%", mb: 2 }}
-                                                renderInput={(params) => <TextField {...params} label="Full Name" />}
-                                            />
+                                                >
 
-                                            <Autocomplete
-                                                disablePortal
-                                                options={options}
-                                                sx={{ width: "100%", mb: 2 }}
-                                                renderInput={(params) => <TextField {...params} label="Select Stream" />}
-                                            />
+                                                </Select>
 
-                                            <Field name="age"
-                                                type="number"
-                                                as={TextField}
-                                                label="Age"
-                                                sx={{ width: "100%", mb: 2 }}></Field>
+                                            </FormControl>
+
+                                            <FormControl fullWidth>
+                                                <InputLabel id="demo-simple-select-label">Select Stream</InputLabel>
+                                                <Select
+                                                    labelId="demo-simple-select-label"
+                                                    id="demo-simple-select"
+                                                    sx={{ width: "100%", mb: 2 }}
+                                                    label="Stream/Class"
+
+                                                >
+
+                                                </Select>
+                                            </FormControl>
+
+
+
+                                            <FormControl fullWidth>
+                                                <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                                                <Select
+                                                    labelId="demo-simple-select-label"
+                                                    id="demo-simple-select"
+                                                    sx={{ width: "100%", mb: 2 }}
+                                                    label="Age"
+
+                                                >
+
+                                                </Select>
+                                            </FormControl>
 
                                             <Field name="contact"
 
@@ -142,6 +161,7 @@ const AddStudent = () => {
 
                                         </Form>
                                     </Formik>
+
                                 </DialogContent>
                                 <DialogActions>
                                     <Button variant='contained' autoFocus onClick={handleClose}>
@@ -181,7 +201,61 @@ const AddStudent = () => {
                                     <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>Stream</td>
 
                                     <td style={{ padding: "20px 3px", color: "black", fontFamily: "math" }}>
-                                        <button style={{backgroundColor:"violet",fontWeight:"bolder",border:"none",borderRadius:"30px",padding:"5px 10px"}}>Student Card</button>
+                                    
+
+                                        <Button sx={{
+                                            borderRadius:"30px",
+                                            color:"blue",
+                                            backgroundColor:"yellow",
+                                            padding:"3px 10px"
+
+                                        }} 
+                                        
+                                        variant="outlined" onClick={handleClickOpen}>
+                                            Student Card
+                                        </Button>
+                                        <BootstrapDialog
+                                            onClose={handleClose}
+                                            aria-labelledby="customized-dialog-title"
+                                            open={open}
+                                        >
+                                            <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+                                                Modal title
+                                            </DialogTitle>
+                                            <IconButton
+                                                aria-label="close"
+                                                onClick={handleClose}
+                                                sx={(theme) => ({
+                                                    position: 'absolute',
+                                                    right: 8,
+                                                    top: 8,
+                                                    color: theme.palette.grey[500],
+                                                })}
+                                            >
+                                                <CloseIcon />
+                                            </IconButton>
+                                            <DialogContent dividers>
+                                                <Typography gutterBottom>
+                                                    Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
+                                                    dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
+                                                    consectetur ac, vestibulum at eros.
+                                                </Typography>
+                                                <Typography gutterBottom>
+                                                    Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+                                                    Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+                                                </Typography>
+                                                <Typography gutterBottom>
+                                                    Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
+                                                    magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
+                                                    ullamcorper nulla non metus auctor fringilla.
+                                                </Typography>
+                                            </DialogContent>
+                                            <DialogActions>
+                                                <Button autoFocus onClick={handleClose}>
+                                                    Save changes
+                                                </Button>
+                                            </DialogActions>
+                                        </BootstrapDialog>
                                     </td>
 
                                     <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>7879898787</td>

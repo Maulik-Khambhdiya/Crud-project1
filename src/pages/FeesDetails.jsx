@@ -11,7 +11,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { Box, Grid, Paper } from '@mui/material';
+import { Box, Grid, InputLabel, Paper, Select } from '@mui/material';
 import { Field, Form, Formik } from 'formik';
 import EditDocumentIcon from '@mui/icons-material/EditDocument';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -37,9 +37,7 @@ const FeesDetails = () => {
     const handleClose = () => {
         setOpen(false);
     };
-    const options = [
-
-    ];
+   
 
     return (
         <>
@@ -102,19 +100,32 @@ const FeesDetails = () => {
                                     <Formik>
                                         <Form>
 
-                                            <Autocomplete
-                                                disablePortal
-                                                options={options}
-                                                sx={{ width: "100%", mb: 2 }}
-                                                renderInput={(params) => <TextField {...params} label="Full Name" />}
-                                            />
+                                            <FormControl fullWidth>
+                                                <InputLabel id="demo-simple-select-label">Full Name</InputLabel>
+                                                <Select
+                                                    labelId="demo-simple-select-label"
+                                                    id="demo-simple-select"
+                                                    sx={{ width: "100%", mb: 2 }}
+                                                    label="Full Name"
 
-                                            <Autocomplete
-                                                disablePortal
-                                                options={options}
-                                                sx={{ width: "100%", mb: 2 }}
-                                                renderInput={(params) => <TextField {...params} label="Select Stream" />}
-                                            />
+                                                >
+
+                                                </Select>
+
+                                            </FormControl>
+
+                                            <FormControl fullWidth>
+                                                <InputLabel id="demo-simple-select-label">Select Stream</InputLabel>
+                                                <Select
+                                                    labelId="demo-simple-select-label"
+                                                    id="demo-simple-select"
+                                                    sx={{ width: "100%", mb: 2 }}
+                                                    label="Stream/Class"
+
+                                                >
+
+                                                </Select>
+                                            </FormControl>
 
                                             <Field name="paid"
                                                 as={TextField}

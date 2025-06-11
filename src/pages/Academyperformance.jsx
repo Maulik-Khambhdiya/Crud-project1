@@ -11,7 +11,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { Box, Grid, Paper, Switch } from '@mui/material';
+import { Box, Grid, InputLabel, Paper, Select } from '@mui/material';
 import { Field, Form, Formik } from 'formik';
 import EditDocumentIcon from '@mui/icons-material/EditDocument';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -37,12 +37,9 @@ const Academyperformance = () => {
     const handleClose = () => {
         setOpen(false);
     };
-    const options = [
+   
 
-    ];
-
-    const label = { inputProps: { 'aria-label': 'Size switch demo' } };
-
+    
 
     return (
         <>
@@ -52,6 +49,7 @@ const Academyperformance = () => {
                     <Grid container spacing={2} alignItems="center">
                         <Grid size={{ lg: 10, md: 10, sm: 12, xs: 12 }}>
                             <Box sx={{ minWidth: 120 }}>
+
                                 <FormControl fullWidth sx={{ backgroundColor: "#00b8ff29", fontFamily: "cursive" }}>
                                     <Autocomplete
                                         disablePortal
@@ -61,6 +59,7 @@ const Academyperformance = () => {
                                         renderInput={(params) => <TextField {...params} label="Search" />}
                                     />
                                 </FormControl>
+
                             </Box>
                         </Grid>
 
@@ -105,20 +104,32 @@ const Academyperformance = () => {
 
                                     <Formik>
                                         <Form>
+                                            <FormControl fullWidth>
+                                                <InputLabel id="demo-simple-select-label">Full Name</InputLabel>
+                                                <Select
+                                                    labelId="demo-simple-select-label"
+                                                    id="demo-simple-select"
+                                                    sx={{ width: "100%", mb: 2 }}
+                                                    label="Full Name"
 
-                                            <Autocomplete
-                                                disablePortal
-                                                options={options}
-                                                sx={{ width: "100%", mb: 2 }}
-                                                renderInput={(params) => <TextField {...params} label="Full Name" />}
-                                            />
+                                                >
 
-                                            <Autocomplete
-                                                disablePortal
-                                                options={options}
-                                                sx={{ width: "100%", mb: 2 }}
-                                                renderInput={(params) => <TextField {...params} label="Select Stream" />}
-                                            />
+                                                </Select>
+
+                                            </FormControl>
+
+                                            <FormControl fullWidth>
+                                                <InputLabel id="demo-simple-select-label">Select Stream</InputLabel>
+                                                <Select
+                                                    labelId="demo-simple-select-label"
+                                                    id="demo-simple-select"
+                                                    sx={{ width: "100%", mb: 2 }}
+                                                    label="Stream/Class"
+
+                                                >
+
+                                                </Select>
+                                            </FormControl>
 
 
                                             <Field name="rank"
@@ -186,7 +197,7 @@ const Academyperformance = () => {
 
                                     <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>Excellent</td>
 
-                                    
+
 
                                     <td style={{ padding: "20px 3px", color: "black", fontFamily: "math" }}>
                                         <button style={{ border: "none", background: "none" }}><DeleteIcon sx={{ ":hover": { color: "rgb(255, 3, 3)" }, fontSize: "25px" }} /></button>

@@ -1,6 +1,6 @@
 import React from 'react'
 import Home from './Home'
-import { Box, Button, Grid, Paper } from '@mui/material';
+import { Box, Button, Grid, InputLabel, Paper, Select } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -35,9 +35,8 @@ const StreamClass = () => {
     const handleClose = () => {
         setOpen(false);
     };
-    const options = [
+  
 
-    ];
 
     return (
         <>
@@ -99,16 +98,23 @@ const StreamClass = () => {
 
                                 {/*....................................Form details ............................................*/}
                                 <DialogContent dividers>
-                                    <Formik>
+                                    <Formik
+
+                                    >
                                         <Form>
 
-                                        
-                                            <Autocomplete
-                                                disablePortal
-                                                options={options}
-                                                sx={{ width: 300, mb: 2 }}
-                                                renderInput={(params) => <TextField {...params} label="Stream/Class" />}
-                                            />
+                                            <FormControl fullWidth>
+                                                <InputLabel id="demo-simple-select-label">Stream/Class</InputLabel>
+                                                <Select
+                                                    labelId="demo-simple-select-label"
+                                                    id="demo-simple-select"
+                                                    sx={{width:"100%", mb : 2}}
+                                                    label="Stream/Class"
+
+                                                >
+
+                                                </Select>
+                                            </FormControl>
 
                                             <Field name="faculty"
                                                 type="text"
@@ -120,7 +126,6 @@ const StreamClass = () => {
                                         </Form>
                                     </Formik>
                                 </DialogContent>
-
 
 
                                 <DialogActions>
