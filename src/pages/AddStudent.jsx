@@ -32,7 +32,9 @@ const AddStudent = () => {
 
 
     const studentList = [];
+
     const [open, setOpen] = React.useState(false);
+    const [open1, setOpen1] = React.useState(false);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -40,7 +42,14 @@ const AddStudent = () => {
     const handleClose = () => {
         setOpen(false);
     };
-    
+
+    const handleCardClickOpen = () => {
+        setOpen1(true);
+    };
+    const handleCardClose = () => {
+        setOpen1(false);
+    };
+
 
     const label = { inputProps: { 'aria-label': 'Size switch demo' } };
 
@@ -201,30 +210,30 @@ const AddStudent = () => {
                                     <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>Stream</td>
 
                                     <td style={{ padding: "20px 3px", color: "black", fontFamily: "math" }}>
-                                    
+
 
                                         <Button sx={{
-                                            borderRadius:"30px",
-                                            color:"blue",
-                                            backgroundColor:"yellow",
-                                            padding:"3px 10px"
+                                            borderRadius: "30px",
+                                            color: "blue",
+                                            backgroundColor: "yellow",
+                                            padding: "3px 10px"
 
-                                        }} 
-                                        
-                                        variant="outlined" onClick={handleClickOpen}>
+                                        }}
+
+                                            variant="outlined" onClick={handleCardClickOpen}>
                                             Student Card
                                         </Button>
                                         <BootstrapDialog
-                                            onClose={handleClose}
+                                            onClose={handleCardClose}
                                             aria-labelledby="customized-dialog-title"
-                                            open={open}
+                                            open={open1}
                                         >
                                             <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-                                                Modal title
+                                                Student Card
                                             </DialogTitle>
                                             <IconButton
                                                 aria-label="close"
-                                                onClick={handleClose}
+                                                onClick={handleCardClose}
                                                 sx={(theme) => ({
                                                     position: 'absolute',
                                                     right: 8,
@@ -235,26 +244,35 @@ const AddStudent = () => {
                                                 <CloseIcon />
                                             </IconButton>
                                             <DialogContent dividers>
+
                                                 <Typography gutterBottom>
-                                                    Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                                                    dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-                                                    consectetur ac, vestibulum at eros.
+                                                   <table border="1">
+                                                    <tr>
+                                                        <th>No</th>
+                                                        <th>Name</th>
+                                                        <th>Age</th>
+                                                        <th>Date of Birth</th>
+                                                        <th>Blood Group</th>
+                                                        <th>Address</th>
+                                                    </tr>
+
+                                                    {/* {
+                                                        student.map((student, index) =>(
+                                                            <tr>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                        ))
+                                                    } */}
+
+                                                   </table>
                                                 </Typography>
-                                                <Typography gutterBottom>
-                                                    Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-                                                    Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-                                                </Typography>
-                                                <Typography gutterBottom>
-                                                    Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
-                                                    magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
-                                                    ullamcorper nulla non metus auctor fringilla.
-                                                </Typography>
+
                                             </DialogContent>
-                                            <DialogActions>
-                                                <Button autoFocus onClick={handleClose}>
-                                                    Save changes
-                                                </Button>
-                                            </DialogActions>
+                                           
                                         </BootstrapDialog>
                                     </td>
 
