@@ -246,17 +246,17 @@ const AddStudent = () => {
                                             <DialogContent dividers>
 
                                                 <Typography gutterBottom>
-                                                   <table border="1">
-                                                    <tr>
-                                                        <th>No</th>
-                                                        <th>Name</th>
-                                                        <th>Age</th>
-                                                        <th>Date of Birth</th>
-                                                        <th>Blood Group</th>
-                                                        <th>Address</th>
-                                                    </tr>
+                                                    <table border="1">
+                                                        <tr>
+                                                            <th>No</th>
+                                                            <th>Name</th>
+                                                            <th>Age</th>
+                                                            <th>Date of Birth</th>
+                                                            <th>Blood Group</th>
+                                                            <th>Address</th>
+                                                        </tr>
 
-                                                    {/* {
+                                                        {/* {
                                                         student.map((student, index) =>(
                                                             <tr>
                                                                 <td></td>
@@ -268,11 +268,11 @@ const AddStudent = () => {
                                                         ))
                                                     } */}
 
-                                                   </table>
+                                                    </table>
                                                 </Typography>
 
                                             </DialogContent>
-                                           
+
                                         </BootstrapDialog>
                                     </td>
 
