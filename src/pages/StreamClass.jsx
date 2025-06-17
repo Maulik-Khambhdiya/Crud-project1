@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Home from './Home'
 import { Box, Button, Grid, InputLabel, Paper, Select } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
@@ -14,6 +14,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Field, Form, Formik } from 'formik';
 import EditDocumentIcon from '@mui/icons-material/EditDocument';
+import axios from 'axios';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -27,6 +28,8 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 const StreamClass = () => {
     const studentList = [];
+
+
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -35,7 +38,70 @@ const StreamClass = () => {
     const handleClose = () => {
         setOpen(false);
     };
-  
+
+    const token = "Bmd2OPMgVDRCEp5n"
+
+    const [ini, setIni] = useState({
+        stream: "",
+        faculty: ""
+    })
+
+    const [facultyList, setFacultyList] = useState([])
+
+    useEffect(() => {
+        viewData()
+    }, [])
+
+    function viewData() {
+        axios.get("https://generateapi.onrender.com/api/stream", {
+            headers: {
+                Authorization: token
+            }
+        })
+            .then((res) => {
+                setFacultyList(res.data.Data)
+                
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+    const handleSubmit = (values) => {
+
+        axios.post("https://generateapi.onrender.com/api/stream", values, {
+            headers: {
+                Authorization: token
+            }
+        })
+            .then((res) => {
+                console.log("Data Add Successfully")
+               // resetForm();
+                viewData()
+                setOpen(false);
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+
+        
+    }
+
+    const deleteData=(deleteId)=>{
+        axios.delete(`https://generateapi.onrender.com/api/stream/${deleteId}`,{
+            headers:{
+                Authorization:token
+            }
+        })
+        .then((res)=>{
+            console.log("Data Delete Successfully")
+            viewData()
+        })
+        .catch((error)=>{
+            console.log(error)
+        })
+    }
+
 
 
     return (
@@ -99,28 +165,34 @@ const StreamClass = () => {
                                 {/*....................................Form details ............................................*/}
                                 <DialogContent dividers>
                                     <Formik
-
+                                        initialValues={ini}
+                                        onSubmit={handleSubmit}
                                     >
                                         <Form>
 
-                                            <FormControl fullWidth>
-                                                <InputLabel id="demo-simple-select-label">Stream/Class</InputLabel>
-                                                <Select
-                                                    labelId="demo-simple-select-label"
-                                                    id="demo-simple-select"
-                                                    sx={{width:"100%", mb : 2}}
-                                                    label="Stream/Class"
-
-                                                >
-
-                                                </Select>
-                                            </FormControl>
+                                            <Field name="stream"
+                                                type="text"
+                                                as={TextField}
+                                                label="Stream/Class"
+                                                sx={{ width: "100%", mb: 2 }}>
+                                                    
+                                                </Field>
 
                                             <Field name="faculty"
                                                 type="text"
                                                 as={TextField}
                                                 label="Faculty"
-                                                sx={{ width: "100%", mb: 2 }}></Field>
+                                                sx={{ width: "100%", mb: 2 }}>
+
+                                                </Field>
+
+                                            
+
+                                            <DialogActions>
+                                                <Button type='submit' variant='contained' autoFocus>
+                                                    Submit
+                                                </Button>
+                                            </DialogActions>
 
 
                                         </Form>
@@ -128,11 +200,7 @@ const StreamClass = () => {
                                 </DialogContent>
 
 
-                                <DialogActions>
-                                    <Button variant='contained' autoFocus onClick={handleClose}>
-                                        Submit
-                                    </Button>
-                                </DialogActions>
+
                             </BootstrapDialog>
                         </Grid>
                     </Grid>
@@ -156,16 +224,21 @@ const StreamClass = () => {
 
 
                             </thead>
-                            <tbody>
-                                <tr style={{ textAlign: "center" }}>
-                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>1</td>
-                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>Stream</td>
-                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>2016</td>
-                                    <td><button style={{ border: "none", background: "none" }}><DeleteIcon sx={{ ":hover": { color: "rgb(255, 3, 3)" }, fontSize: "25px" }} /></button></td>
+                           
+                                {
 
-                                    <td><button style={{ border: "none", background: "none" }}><EditDocumentIcon sx={{ ":hover": { color: "rgb(140, 7, 158)" }, fontSize: "25px" }} /></button></td>
-                                </tr>
-                            </tbody>
+                                    facultyList.map((item, index) => (
+                                        < tr style={{ textAlign: "center" }}>
+                                            <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>{index+1}</td>
+                                            <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>{item.stream}</td>
+                                            <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>{item.faculty}</td>
+                                            <td><button onClick={()=>deleteData(item._id)} style={{ border: "none", background: "none" }}><DeleteIcon sx={{ ":hover": { color: "rgb(255, 3, 3)" }, fontSize: "25px" }} /></button></td>
+
+                                            <td><button style={{ border: "none", background: "none" }}><EditDocumentIcon sx={{ ":hover": { color: "rgb(140, 7, 158)" }, fontSize: "25px" }} /></button></td>
+                                        </tr>
+                                    ))
+                                }
+                           
 
                         </table>
                     </Grid>
