@@ -30,6 +30,7 @@ const StreamClass = () => {
     const studentList = [];
 
 
+
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -40,13 +41,19 @@ const StreamClass = () => {
     };
 
     const token = "Bmd2OPMgVDRCEp5n"
+    const userId = localStorage.getItem('token')
+
+    // console.log("id ==> ",userId);
 
     const [ini, setIni] = useState({
         stream: "",
-        faculty: ""
+        faculty: "",
+        user: null
     })
 
     const [facultyList, setFacultyList] = useState([])
+
+    const [editId, setEditId] = useState(null)
 
     useEffect(() => {
         viewData()
@@ -60,46 +67,91 @@ const StreamClass = () => {
         })
             .then((res) => {
                 setFacultyList(res.data.Data)
-                
+
             })
             .catch((error) => {
                 console.log(error)
             })
     }
 
-    const handleSubmit = (values) => {
+    const handleSubmit = (values , {resetForm}) => {
 
-        axios.post("https://generateapi.onrender.com/api/stream", values, {
+        values.user = userId
+        // console.log("values ==> ",values);
+
+        const { _id, ...rest } = values
+
+        rest.user = userId
+
+        // console.log("rest==>",rest);
+
+
+        if (editId != null) {
+
+            axios.patch(`https://generateapi.onrender.com/api/stream/${editId}`, rest, {
+                headers: {
+                    Authorization: token
+                }
+            })
+                .then((res) => {
+                    console.log("Data Edited")
+                    setEditId(null)
+                    viewData()
+                    setIni({
+                        stream: "",
+                        faculty: "",
+                        user: null
+                    })
+
+                })
+                
+                .catch((error) => {
+                    console.log(error)
+                })
+
+        }
+
+        else {
+
+            axios.post("https://generateapi.onrender.com/api/stream", values, {
+                headers: {
+                    Authorization: token
+                }
+            })
+                .then((res) => {
+                    console.log("Data Add Successfully")
+                    //resetForm();
+                    viewData()
+                    setOpen(false);
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        }
+
+        resetForm()
+
+    }
+
+    const deleteData = (deleteId) => {
+        axios.delete(`https://generateapi.onrender.com/api/stream/${deleteId}`, {
             headers: {
                 Authorization: token
             }
         })
             .then((res) => {
-                console.log("Data Add Successfully")
-               // resetForm();
+                console.log("Data Delete Successfully")
                 viewData()
-                setOpen(false);
             })
             .catch((error) => {
                 console.log(error)
             })
-
-        
     }
 
-    const deleteData=(deleteId)=>{
-        axios.delete(`https://generateapi.onrender.com/api/stream/${deleteId}`,{
-            headers:{
-                Authorization:token
-            }
-        })
-        .then((res)=>{
-            console.log("Data Delete Successfully")
-            viewData()
-        })
-        .catch((error)=>{
-            console.log(error)
-        })
+    const editData = (item) => {
+        setIni(item)
+        setEditId(item._id)
+        setOpen(true);
     }
 
 
@@ -165,6 +217,7 @@ const StreamClass = () => {
                                 {/*....................................Form details ............................................*/}
                                 <DialogContent dividers>
                                     <Formik
+                                        enableReinitialize
                                         initialValues={ini}
                                         onSubmit={handleSubmit}
                                     >
@@ -175,8 +228,8 @@ const StreamClass = () => {
                                                 as={TextField}
                                                 label="Stream/Class"
                                                 sx={{ width: "100%", mb: 2 }}>
-                                                    
-                                                </Field>
+
+                                            </Field>
 
                                             <Field name="faculty"
                                                 type="text"
@@ -184,9 +237,9 @@ const StreamClass = () => {
                                                 label="Faculty"
                                                 sx={{ width: "100%", mb: 2 }}>
 
-                                                </Field>
+                                            </Field>
 
-                                            
+
 
                                             <DialogActions>
                                                 <Button type='submit' variant='contained' autoFocus>
@@ -224,21 +277,21 @@ const StreamClass = () => {
 
 
                             </thead>
-                           
-                                {
 
-                                    facultyList.map((item, index) => (
-                                        < tr style={{ textAlign: "center" }}>
-                                            <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>{index+1}</td>
-                                            <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>{item.stream}</td>
-                                            <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>{item.faculty}</td>
-                                            <td><button onClick={()=>deleteData(item._id)} style={{ border: "none", background: "none" }}><DeleteIcon sx={{ ":hover": { color: "rgb(255, 3, 3)" }, fontSize: "25px" }} /></button></td>
+                            {
 
-                                            <td><button style={{ border: "none", background: "none" }}><EditDocumentIcon sx={{ ":hover": { color: "rgb(140, 7, 158)" }, fontSize: "25px" }} /></button></td>
-                                        </tr>
-                                    ))
-                                }
-                           
+                                facultyList.map((item, index) => (
+                                    < tr style={{ textAlign: "center" }}>
+                                        <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>{index + 1}</td>
+                                        <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>{item.stream}</td>
+                                        <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>{item.faculty}</td>
+                                        <td><button onClick={() => deleteData(item._id)} style={{ border: "none", background: "none" }}><DeleteIcon sx={{ ":hover": { color: "rgb(255, 3, 3)" }, fontSize: "25px" }} /></button></td>
+
+                                        <td><button onClick={() => editData(item)} style={{ border: "none", background: "none" }}><EditDocumentIcon sx={{ ":hover": { color: "rgb(140, 7, 158)" }, fontSize: "25px" }} /></button></td>
+                                    </tr>
+                                ))
+                            }
+
 
                         </table>
                     </Grid>

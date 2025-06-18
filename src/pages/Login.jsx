@@ -28,7 +28,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 const Login = () => {
 
-    const token = "SigQkr3rjDKgJI8G"
+    const token = "Bmd2OPMgVDRCEp5n"
     let history = useHistory();
 
     const [ini, setIni] = useState({
@@ -37,15 +37,18 @@ const Login = () => {
     })
 
     const handleSubmit = (values) => {
+
+        console.log(values);
+        
         axios.post('https://generateapi.onrender.com/auth/login', values, {
             headers: {
                 Authorization: token
             }
         })
             .then((response) => {
-                console.log(response.data)
-                localStorage.setItem('token', response.data.token)
-                history.push('/')
+                console.log(response.data.data._id)
+                localStorage.setItem('token', response.data.data._id)
+                history.push('/home')
 
             }
             )

@@ -20,9 +20,9 @@ function App() {
 
         <Switch>
 
-          {/* <Route exact path="/">
+          <Route exact path="/">
             <Login></Login>
-          </Route> */}
+          </Route>
 
           <Route path="/home">
             <Home></Home>
