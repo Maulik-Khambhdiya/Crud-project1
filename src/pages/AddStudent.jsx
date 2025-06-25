@@ -1,5 +1,5 @@
 import { Box, Grid, InputLabel, Paper, Select, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import FormControl from '@mui/material/FormControl';
 import Home from './Home';
 import TextField from '@mui/material/TextField';
@@ -16,6 +16,7 @@ import { Field, Form, Formik } from 'formik';
 import EditDocumentIcon from '@mui/icons-material/EditDocument';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Switch from '@mui/material/Switch';
+import axios from 'axios';
 
 
 
@@ -31,7 +32,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 const AddStudent = () => {
 
 
-    const studentList = [];
+
 
     const [open, setOpen] = React.useState(false);
     const [open1, setOpen1] = React.useState(false);
@@ -52,8 +53,140 @@ const AddStudent = () => {
 
 
     const label = { inputProps: { 'aria-label': 'Size switch demo' } };
+    const token = "Bmd2OPMgVDRCEp5n"
+
+    const [studentList, setStudentList] = useState([])
+    const [sList, setSList] = useState([])
+
+    const [ini, setIni] = useState({
+        student_name: "",
+        age: "",
+        gender: "",
+        bloodgroup: "",
+        address: "",
+        contact: "",
+
+    })
+    
+
+    const [editId, setEditId] = useState(null)
+
+    useEffect(() => {
+        viewData()
+        viewStream()
+    }, [])
+
+    function viewStream() {
+        axios.get("https://generateapi.onrender.com/api/stream", {
+            headers: {
+                Authorization: token
+            }
+
+        })
+            .then((res) => {
+                setSList(res.data.Data)
+
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+    function viewData() {
+
+        axios.get("https://generateapi.onrender.com/api/student_details", {
+            headers: {
+                Authorization: token
+            }
+        })
+            .then((res) => {
+                setStudentList(res.data.Data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+    const handleSubmit = (values, { resetForm }) => {
 
 
+        const { _id, ...rest } = values
+      
+
+        if (editId != null) {
+
+            axios.patch(`https://generateapi.onrender.com/api/student_details/${editId}`, rest, {
+                headers: {
+                    Authorization: token
+                }
+            })
+                .then((res) => {
+                    console.log("Data Edited")
+                    setEditId(null)
+                    viewData()
+                    setIni({
+                        student_name: "",
+                        age: "",
+                        gender: "",
+                        bloodgroup: "",
+                        address: "",
+                        contact: "",
+                        user:null
+                    })
+
+                })
+
+                .catch((error) => {
+                    console.log(error)
+                })
+
+        }
+
+        else {
+            axios.post("https://generateapi.onrender.com/api/student_details", values, {
+                headers: {
+                    Authorization: token
+                }
+            })
+                .then((res) => {
+                    console.log("Data Added")
+                    viewData()
+                    setOpen(false);
+
+                })
+                .catch((error) => {
+                    console.log(error);
+
+                })
+            resetForm()
+        }
+
+
+    }
+
+    const deleteData = (deleteId) => {
+        axios.delete(`https://generateapi.onrender.com/api/student_details/${deleteId}`, {
+            headers: {
+                Authorization: token
+            }
+
+        })
+            .then((res) => {
+                console.log("Data Delete Successfully")
+                viewData()
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+
+    }
+
+
+    const editData = (item) => {
+        setIni(item)
+        setEditId(item._id)
+        setOpen(true);
+    }
 
     return (
         <>
@@ -115,22 +248,21 @@ const AddStudent = () => {
                                 </IconButton>
                                 <DialogContent dividers>
 
-                                    <Formik>
+                                    <Formik
+                                        enableReinitialize
+                                        initialValues={ini}
+                                        onSubmit={handleSubmit}
+                                    >
                                         <Form>
 
-                                            <FormControl fullWidth>
-                                                <InputLabel id="demo-simple-select-label">Full Name</InputLabel>
-                                                <Select
-                                                    labelId="demo-simple-select-label"
-                                                    id="demo-simple-select"
-                                                    sx={{ width: "100%", mb: 2 }}
-                                                    label="Full Name"
+                                            <Field name="student_name"
+                                                type="text"
+                                                as={TextField}
+                                                label="Full Name"
+                                                sx={{ width: "100%", mb: 2 }}>
 
-                                                >
+                                            </Field>
 
-                                                </Select>
-
-                                            </FormControl>
 
                                             <FormControl fullWidth>
                                                 <InputLabel id="demo-simple-select-label">Select Stream</InputLabel>
@@ -139,32 +271,50 @@ const AddStudent = () => {
                                                     id="demo-simple-select"
                                                     sx={{ width: "100%", mb: 2 }}
                                                     label="Stream/Class"
-
                                                 >
+                                                    {
+                                                        sList.map((item, index) => (
+                                                            <option>{item.stream}</option>
+                                                        ))
+                                                    }
 
                                                 </Select>
                                             </FormControl>
 
 
 
-                                            <FormControl fullWidth>
-                                                <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                                                <Select
-                                                    labelId="demo-simple-select-label"
-                                                    id="demo-simple-select"
-                                                    sx={{ width: "100%", mb: 2 }}
-                                                    label="Age"
+                                            <Field name="age"
+                                                type="number"
+                                                as={TextField}
+                                                label="Age"
+                                                sx={{ width: "100%", mb: 2 }}>
 
-                                                >
+                                            </Field>
 
-                                                </Select>
-                                            </FormControl>
+                                            <Field name="gender"
+                                                type="text"
+                                                as={TextField}
+                                                label="Gender"
+                                                sx={{ width: "100%", mb: 2 }}>
+
+                                            </Field>
+
+                                            <Field name="address"
+                                                type="text"
+                                                as={TextField}
+                                                label="Address"
+                                                sx={{ width: "100%", mb: 2 }}>
+
+                                            </Field>
+
 
                                             <Field name="contact"
 
                                                 as={TextField}
                                                 label="Contact"
-                                                sx={{ width: "100%", mb: 2 }}></Field>
+                                                sx={{ width: "100%", mb: 2 }}>
+
+                                            </Field>
 
 
 
@@ -195,7 +345,7 @@ const AddStudent = () => {
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Name</th>
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Stream</th>
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Details</th>
-                                    <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Contact</th>
+
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Active Status</th>
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }} >Delete</th>
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Update</th>
@@ -203,93 +353,94 @@ const AddStudent = () => {
 
 
                             </thead>
-                            <tbody>
-                                <tr style={{ textAlign: "center" }}>
-                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>No</td>
-                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>Maulik khambhdiya</td>
-                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>Stream</td>
 
-                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math" }}>
+                            {
+                                studentList.map((item, index) => (
+                                    <tr style={{ textAlign: "center" }}>
+                                        <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>{index + 1}</td>
+                                        <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>{item.student_name}</td>
+                                        <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>{item.stream.stream}</td>
+
+                                        <td style={{ padding: "20px 3px", color: "black", fontFamily: "math" }}>
 
 
-                                        <Button sx={{
-                                            borderRadius: "30px",
-                                            color: "blue",
-                                            backgroundColor: "yellow",
-                                            padding: "3px 10px"
+                                            <Button sx={{
+                                                borderRadius: "30px",
+                                                color: "blue",
+                                                backgroundColor: "yellow",
+                                                padding: "3px 10px"
 
-                                        }}
+                                            }}
 
-                                            variant="outlined" onClick={handleCardClickOpen}>
-                                            Student Card
-                                        </Button>
-                                        <BootstrapDialog
-                                            onClose={handleCardClose}
-                                            aria-labelledby="customized-dialog-title"
-                                            open={open1}
-                                        >
-                                            <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+                                                variant="outlined" onClick={handleCardClickOpen}>
                                                 Student Card
-                                            </DialogTitle>
-                                            <IconButton
-                                                aria-label="close"
-                                                onClick={handleCardClose}
-                                                sx={(theme) => ({
-                                                    position: 'absolute',
-                                                    right: 8,
-                                                    top: 8,
-                                                    color: theme.palette.grey[500],
-                                                })}
+                                            </Button>
+                                            <BootstrapDialog
+                                                onClose={handleCardClose}
+                                                aria-labelledby="customized-dialog-title"
+                                                open={open1}
                                             >
-                                                <CloseIcon />
-                                            </IconButton>
-                                            <DialogContent dividers>
+                                                <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+                                                    Student Card
+                                                </DialogTitle>
+                                                <IconButton
+                                                    aria-label="close"
+                                                    onClick={handleCardClose}
+                                                    sx={(theme) => ({
+                                                        position: 'absolute',
+                                                        right: 8,
+                                                        top: 8,
+                                                        color: theme.palette.grey[500],
+                                                    })}
+                                                >
+                                                    <CloseIcon />
+                                                </IconButton>
+                                                <DialogContent dividers>
 
-                                                <Typography gutterBottom>
-                                                    <table border="1">
-                                                        <tr>
-                                                            <th>No</th>
-                                                            <th>Name</th>
-                                                            <th>Age</th>
-                                                            <th>Date of Birth</th>
-                                                            <th>Blood Group</th>
-                                                            <th>Address</th>
-                                                        </tr>
-
-                                                        {/* {
-                                                        student.map((student, index) =>(
+                                                    <Typography gutterBottom>
+                                                        <table border="1">
                                                             <tr>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
+                                                                <th>No</th>
+                                                                <th>Name</th>
+                                                                <th>Age</th>
+                                                                <th>Gender</th>
+                                                                <th>Contact</th>
+                                                                <th>Address</th>
                                                             </tr>
-                                                        ))
-                                                    } */}
 
-                                                    </table>
-                                                </Typography>
 
-                                            </DialogContent>
+                                                            <tr>
+                                                                <td>{index + 1}</td>
+                                                                <td>{item.student_name}</td>
+                                                                <td>{item.age}</td>
+                                                                <td>{item.gender}</td>
+                                                                <td>{item.contact}</td>
+                                                                <td>{item.address}</td>
+                                                            </tr>
 
-                                        </BootstrapDialog>
-                                    </td>
+                                                        </table>
+                                                    </Typography>
 
-                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>7879898787</td>
-                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math" }}>
-                                        <Switch {...label} defaultChecked size="small" />
-                                    </td>
+                                                </DialogContent>
 
-                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math" }}>
-                                        <button style={{ border: "none", background: "none" }}><DeleteIcon sx={{ ":hover": { color: "rgb(255, 3, 3)" }, fontSize: "25px" }} /></button>
-                                    </td>
+                                            </BootstrapDialog>
+                                        </td>
 
-                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math" }}>
-                                        <button style={{ border: "none", background: "none" }}><EditDocumentIcon sx={{ ":hover": { color: "rgb(140, 7, 158)" }, fontSize: "25px" }} /></button>
-                                    </td>
-                                </tr>
-                            </tbody>
+
+                                        <td style={{ padding: "20px 3px", color: "black", fontFamily: "math" }}>
+                                            <Switch {...label} defaultChecked size="small" />
+                                        </td>
+
+                                        <td style={{ padding: "20px 3px", color: "black", fontFamily: "math" }}>
+                                            <button onClick={() => { deleteData(item._id) }} style={{ border: "none", background: "none" }}><DeleteIcon sx={{ ":hover": { color: "rgb(255, 3, 3)" }, fontSize: "25px" }} /></button>
+                                        </td>
+
+                                        <td style={{ padding: "20px 3px", color: "black", fontFamily: "math" }}>
+                                            <button onClick={() => { editData(item) }} style={{ border: "none", background: "none" }}><EditDocumentIcon sx={{ ":hover": { color: "rgb(140, 7, 158)" }, fontSize: "25px" }} /></button>
+                                        </td>
+                                    </tr>
+                                ))
+                            }
 
                         </table>
                     </Grid>

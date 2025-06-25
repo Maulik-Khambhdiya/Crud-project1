@@ -28,7 +28,7 @@ const Home = ({ children }) => {
 
   const icon = [<DashboardIcon sx={{ fontSize: "32px" }} />, <DeviceHubIcon sx={{ fontSize: "32px" }} />, <GroupAddIcon sx={{ fontSize: "32px" }} />, <StarsIcon sx={{ fontSize: "32px" }} />, <PaidIcon sx={{ fontSize: "32px" }} />]
 
-  const arrayName = [{ name: "Dashboard", path: "/home" }, { name: "Class / Stream", path: "/streamclass" }, { name: "Student Details", path: "/add-student" }, { name: "Academic Performance", path: "/academyperformance" }, { name: "Fess Details", path: "feesdetails" }]
+  const arrayName = [{ name: "Dashboard", path: "/home" }, { name: "Class / Stream", path: "/streamclass" }, { name: "Student Details", path: "/add-student" }, { name: "Academic Performance", path: "/academyperformance" }, { name: "Fees Details", path: "feesdetails" }]
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);

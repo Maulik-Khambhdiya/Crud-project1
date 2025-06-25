@@ -85,7 +85,6 @@ const StreamClass = () => {
 
         // console.log("rest==>",rest);
 
-
         if (editId != null) {
 
             axios.patch(`https://generateapi.onrender.com/api/stream/${editId}`, rest, {
