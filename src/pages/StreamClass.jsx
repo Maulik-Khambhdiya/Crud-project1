@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Home from './Home'
-import { Box, Button, Grid, InputLabel, Paper, Select } from '@mui/material';
+import { Box, Button, Grid, Paper} from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -28,7 +28,6 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 const StreamClass = () => {
     const studentList = [];
-
 
 
     const [open, setOpen] = React.useState(false);
@@ -74,7 +73,7 @@ const StreamClass = () => {
             })
     }
 
-    const handleSubmit = (values , {resetForm}) => {
+    const handleSubmit = (values, { resetForm }) => {
 
         values.user = userId
         // console.log("values ==> ",values);
@@ -103,7 +102,7 @@ const StreamClass = () => {
                     })
 
                 })
-                
+
                 .catch((error) => {
                     console.log(error)
                 })

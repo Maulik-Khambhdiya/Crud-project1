@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Home from './Home'
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
@@ -11,10 +11,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { Box, Grid, InputLabel, Paper, Select } from '@mui/material';
+import { Box, Grid, InputLabel, MenuItem, Paper, Select } from '@mui/material';
 import { Field, Form, Formik } from 'formik';
 import EditDocumentIcon from '@mui/icons-material/EditDocument';
 import DeleteIcon from '@mui/icons-material/Delete';
+import axios from 'axios';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -28,7 +29,9 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 
 const Academyperformance = () => {
-    const studentList = [];
+
+
+    const [academicList, setAcademicList] = useState([])
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -37,9 +40,59 @@ const Academyperformance = () => {
     const handleClose = () => {
         setOpen(false);
     };
-   
 
-    
+    const token = "Bmd2OPMgVDRCEp5n"
+    const [studentList, setStudentList] = useState([])
+    const [sList, setSList] = useState([])
+
+    const [ini, setIni] = useState({
+        student_name: '',
+        stream: "",
+        class_rank: "",
+        percentage: "",
+        teacher_commit: "",
+        user: null
+    })
+
+    useEffect(() => {
+        viewPerformance()
+    }, [])
+
+    function viewPerformance() {
+        axios.get("https://generateapi.onrender.com/api/academic_performance", {
+            headers: {
+                Authorization: token
+            }
+        })
+            .then((res) => {
+                setAcademicList(res.data.Data)
+
+            })
+            .catch((error) => {
+                console.log(error);
+
+            })
+    }
+
+    const handleData = (values) => {
+        axios.post("https://generateapi.onrender.com/api/academic_performance", values, {
+            headers: {
+                Authorization: token
+            }
+        })
+
+            .then((res) => {
+                console.log("Data Added Successfully");
+                viewPerformance()
+                setOpen(false);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+
+
 
     return (
         <>
@@ -102,7 +155,11 @@ const Academyperformance = () => {
                                 </IconButton>
                                 <DialogContent dividers>
 
-                                    <Formik>
+                                    <Formik
+
+                                        initialValues={ini}
+                                        onSubmit={handleData}
+                                    >
                                         <Form>
                                             <FormControl fullWidth>
                                                 <InputLabel id="demo-simple-select-label">Full Name</InputLabel>
@@ -113,6 +170,12 @@ const Academyperformance = () => {
                                                     label="Full Name"
 
                                                 >
+
+                                                    {
+                                                        studentList.map((item, index) => {
+                                                            <MenuItem value={item._id}>{item.student_name}</MenuItem>
+                                                        })
+                                                    }
 
                                                 </Select>
 
@@ -127,6 +190,13 @@ const Academyperformance = () => {
                                                     label="Stream/Class"
 
                                                 >
+
+                                                    {
+                                                        sList.map((item, index) => (
+                                                            <MenuItem value={item._id}>{item.stream}</MenuItem>
+
+                                                        ))
+                                                    }
 
                                                 </Select>
                                             </FormControl>
@@ -148,15 +218,17 @@ const Academyperformance = () => {
                                                 label="Teacher's Comments"
                                                 sx={{ width: "100%", mb: 2 }}></Field>
 
+                                            <DialogActions>
+                                                <Button variant='contained' autoFocus type='submit'>
+                                                    Submit
+                                                </Button>
+                                            </DialogActions>
+
                                         </Form>
                                     </Formik>
 
                                 </DialogContent>
-                                <DialogActions>
-                                    <Button variant='contained' autoFocus onClick={handleClose}>
-                                        Submit
-                                    </Button>
-                                </DialogActions>
+
                             </BootstrapDialog>
                         </Grid>
                     </Grid>
@@ -174,8 +246,9 @@ const Academyperformance = () => {
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>No</th>
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Name</th>
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Stream</th>
-                                    <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Faculty</th>
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Rank</th>
+
+                                    <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Percentage</th>
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Comments</th>
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }} >Delete</th>
                                     <th style={{ padding: "20px 3px", color: "white", fontFamily: "math", fontSize: "14px" }}>Update</th>
@@ -183,31 +256,34 @@ const Academyperformance = () => {
 
 
                             </thead>
-                            <tbody>
-                                <tr style={{ textAlign: "center", border: "1px solid black" }}>
-                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>No</td>
+                            {
+                                academicList.map((item, index) => (
+                                    <tr style={{ textAlign: "center", border: "1px solid black" }}>
+                                        <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>{index + 1}</td>
 
-                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>Maulik khambhdiya</td>
+                                        <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>{item.student_name}</td>
 
-                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>Stream</td>
+                                        <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>{item.stream.stream}</td>
 
-                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>sir</td>
-
-                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>First</td>
-
-                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>Excellent</td>
+                                        <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>{item.class_rank}</td>
 
 
+                                        <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>{item.percentage}</td>
 
-                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math" }}>
-                                        <button style={{ border: "none", background: "none" }}><DeleteIcon sx={{ ":hover": { color: "rgb(255, 3, 3)" }, fontSize: "25px" }} /></button>
-                                    </td>
+                                        <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>{item.teacher_commit}</td>
 
-                                    <td style={{ padding: "20px 3px", color: "black", fontFamily: "math" }}>
-                                        <button style={{ border: "none", background: "none" }}><EditDocumentIcon sx={{ ":hover": { color: "rgb(140, 7, 158)" }, fontSize: "25px" }} /></button>
-                                    </td>
-                                </tr>
-                            </tbody>
+
+
+                                        <td style={{ padding: "20px 3px", color: "black", fontFamily: "math" }}>
+                                            <button style={{ border: "none", background: "none" }}><DeleteIcon sx={{ ":hover": { color: "rgb(255, 3, 3)" }, fontSize: "25px" }} /></button>
+                                        </td>
+
+                                        <td style={{ padding: "20px 3px", color: "black", fontFamily: "math" }}>
+                                            <button style={{ border: "none", background: "none" }}><EditDocumentIcon sx={{ ":hover": { color: "rgb(140, 7, 158)" }, fontSize: "25px" }} /></button>
+                                        </td>
+                                    </tr>
+                                ))
+                            }
 
                         </table>
                     </Grid>

@@ -1,4 +1,4 @@
-import { Box, Grid, InputLabel, Paper, Select, Typography } from '@mui/material'
+import { Box, Grid, InputLabel, MenuItem, Paper, Select, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import FormControl from '@mui/material/FormControl';
 import Home from './Home';
@@ -31,7 +31,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 const AddStudent = () => {
 
-
+    const userId = localStorage.getItem('token')
 
 
     const [open, setOpen] = React.useState(false);
@@ -60,14 +60,16 @@ const AddStudent = () => {
 
     const [ini, setIni] = useState({
         student_name: "",
+        stream: "",
         age: "",
         gender: "",
         bloodgroup: "",
         address: "",
         contact: "",
+        user: null
 
     })
-    
+
 
     const [editId, setEditId] = useState(null)
 
@@ -109,11 +111,18 @@ const AddStudent = () => {
 
     const handleSubmit = (values, { resetForm }) => {
 
-
+        values.user = userId
         const { _id, ...rest } = values
-      
+        rest.user = userId
+
+
+
+        console.log("rest=>", rest);
 
         if (editId != null) {
+
+            //console.log("editId =>", editId);
+
 
             axios.patch(`https://generateapi.onrender.com/api/student_details/${editId}`, rest, {
                 headers: {
@@ -131,7 +140,8 @@ const AddStudent = () => {
                         bloodgroup: "",
                         address: "",
                         contact: "",
-                        user:null
+                        user: null,
+                        stream: ""
                     })
 
                 })
@@ -274,7 +284,8 @@ const AddStudent = () => {
                                                 >
                                                     {
                                                         sList.map((item, index) => (
-                                                            <option>{item.stream}</option>
+                                                            <MenuItem value={item._id}>{item.stream}</MenuItem>
+
                                                         ))
                                                     }
 
@@ -316,17 +327,17 @@ const AddStudent = () => {
 
                                             </Field>
 
-
+                                            <DialogActions>
+                                                <Button variant='contained' autoFocus type='submit'>
+                                                    Submit
+                                                </Button>
+                                            </DialogActions>
 
                                         </Form>
                                     </Formik>
 
                                 </DialogContent>
-                                <DialogActions>
-                                    <Button variant='contained' autoFocus onClick={handleClose}>
-                                        Submit
-                                    </Button>
-                                </DialogActions>
+
                             </BootstrapDialog>
                         </Grid>
                     </Grid>
@@ -366,9 +377,13 @@ const AddStudent = () => {
 
                                             <Button sx={{
                                                 borderRadius: "30px",
-                                                color: "blue",
-                                                backgroundColor: "yellow",
-                                                padding: "3px 10px"
+                                                color: "white",
+                                                backgroundColor: "#36B0D8",
+                                                borderColor: "white",
+                                                padding: "3px 10px",
+                                                ":hover": {
+                                                    color: "black"
+                                                }
 
                                             }}
 

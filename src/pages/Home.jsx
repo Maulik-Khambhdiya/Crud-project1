@@ -19,6 +19,7 @@ import PaidIcon from '@mui/icons-material/Paid';
 import StarsIcon from '@mui/icons-material/Stars';
 import { Link } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const drawerWidth = 240;
 
@@ -64,10 +65,10 @@ const Home = ({ children }) => {
                 ":hover": {
                   backgroundColor: "#1976d2",
                   color: "white",
-                
+
                   "& .MuiListItemIcon-root": {
                     color: "white",
-                    
+
                   }
                 }
               }}>
@@ -112,13 +113,31 @@ const Home = ({ children }) => {
               <MenuIcon />
             </IconButton>
 
-            <Link href="/home">
-              <Typography sx={{ color: "white" }} variant="h6" noWrap component="div">
-                Student Record Dashboard
-              </Typography>
-            </Link>
+            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
+
+              <Box>
+                <Link href="/home">
+                  <Typography sx={{ color: "white" }} variant="h6" noWrap component="div">
+                    Student Record Dashboard
+                  </Typography>
+                </Link>
+
+              </Box>
+
+              <Box sx={{padding:"5px",":hover":{
+                backgroundColor:"ButtonShadow",
+                color:"black",
+                borderRadius:"30px",
+              }}}>
+
+                <LogoutIcon></LogoutIcon>
+              </Box>
+
+            </Box>
+
 
           </Toolbar>
+
         </AppBar>
 
         <Box
@@ -158,7 +177,7 @@ const Home = ({ children }) => {
           </Drawer>
 
         </Box>
-        
+
         <Box
           component="main"
           sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
@@ -168,8 +187,8 @@ const Home = ({ children }) => {
           {/* // get the data using children */}
 
 
-          
-          
+
+
         </Box>
       </Box>
     </>
