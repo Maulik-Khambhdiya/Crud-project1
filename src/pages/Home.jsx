@@ -17,7 +17,7 @@ import DeviceHubIcon from '@mui/icons-material/DeviceHub';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import PaidIcon from '@mui/icons-material/Paid';
 import StarsIcon from '@mui/icons-material/Stars';
-import { Link } from '@mui/material';
+import { Button, Link } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LogoutIcon from '@mui/icons-material/Logout';
 
@@ -124,14 +124,20 @@ const Home = ({ children }) => {
 
               </Box>
 
-              <Box sx={{padding:"5px",":hover":{
-                backgroundColor:"ButtonShadow",
-                color:"black",
-                borderRadius:"30px",
-              }}}>
+              <Button
 
+                sx={{
+                  color:"white",
+                   ":hover": {
+                    backgroundColor: "ButtonShadow",
+                    color: "black",
+                    
+                  }
+                }}
+              >
                 <LogoutIcon></LogoutIcon>
-              </Box>
+              </Button>
+
 
             </Box>
 

@@ -45,6 +45,9 @@ const Academyperformance = () => {
     const [studentList, setStudentList] = useState([])
     const [sList, setSList] = useState([])
 
+    const [editId, setEditId] = useState(null)
+    const userId = localStorage.getItem('token')
+
     const [ini, setIni] = useState({
         student_name: '',
         stream: "",
@@ -53,6 +56,8 @@ const Academyperformance = () => {
         teacher_commit: "",
         user: null
     })
+
+
 
     useEffect(() => {
         viewPerformance()
@@ -75,20 +80,82 @@ const Academyperformance = () => {
     }
 
     const handleData = (values) => {
-        axios.post("https://generateapi.onrender.com/api/academic_performance", values, {
+
+        values.user = userId
+
+        const {_id, ...rest}= values
+
+        rest.user = userId
+
+        if (editId != null) {
+
+            axios.patch(`https://generateapi.onrender.com/api/academic_performance/${editId}`, rest, {
+                headers: {
+                    Authorization: token
+                }
+            })
+                .then((res) => {
+
+                    console.log("Data Edited");
+                    setEditId(null)
+                    viewPerformance()
+                    setIni({
+                        student_name: '',
+                        stream: "",
+                        class_rank: "",
+                        percentage: "",
+                        teacher_commit: "",
+                        user: null
+
+                    })
+                     setOpen(false);
+                })
+                .catch((error)=>{
+                    console.log(error);
+                })
+
+        }
+        else {
+
+            axios.post("https://generateapi.onrender.com/api/academic_performance", values, {
+                headers: {
+                    Authorization: token
+                }
+            })
+
+                .then((res) => {
+                    console.log("Data Added Successfully");
+                    viewPerformance()
+                    setOpen(false);
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+
+        }
+
+    }
+
+
+    const deleteData = (deleteId) => {
+        axios.delete(`https://generateapi.onrender.com/api/academic_performance/${deleteId}`, {
             headers: {
                 Authorization: token
             }
         })
-
             .then((res) => {
-                console.log("Data Added Successfully");
+                console.log("Data Deleted Successfully");
                 viewPerformance()
-                setOpen(false);
             })
             .catch((error) => {
                 console.log(error);
             })
+    }
+
+    const editData = (item) => {
+        setAcademicList(item)
+        setEditId(item._id)
+        setOpen(true);
     }
 
 
@@ -261,25 +328,27 @@ const Academyperformance = () => {
                                     <tr style={{ textAlign: "center", border: "1px solid black" }}>
                                         <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>{index + 1}</td>
 
-                                        <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>{item.student_name}</td>
+                                        <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>{item.full_name.student_name}</td>
 
                                         <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>{item.stream.stream}</td>
 
                                         <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>{item.class_rank}</td>
 
 
-                                        <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>{item.percentage}</td>
+                                        <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>{item.percentage + " %"}</td>
 
                                         <td style={{ padding: "20px 3px", color: "black", fontFamily: "math", fontSize: "14px" }}>{item.teacher_commit}</td>
 
 
 
                                         <td style={{ padding: "20px 3px", color: "black", fontFamily: "math" }}>
-                                            <button style={{ border: "none", background: "none" }}><DeleteIcon sx={{ ":hover": { color: "rgb(255, 3, 3)" }, fontSize: "25px" }} /></button>
+                                            <button onClick={() => { deleteData(item._id) }} style={{ border: "none", background: "none" }}><DeleteIcon sx={{ ":hover": { color: "rgb(255, 3, 3)" }, fontSize: "25px" }} /></button>
                                         </td>
 
                                         <td style={{ padding: "20px 3px", color: "black", fontFamily: "math" }}>
-                                            <button style={{ border: "none", background: "none" }}><EditDocumentIcon sx={{ ":hover": { color: "rgb(140, 7, 158)" }, fontSize: "25px" }} /></button>
+                                            <button
+                                                onClick={() => { editData(item) }}
+                                                style={{ border: "none", background: "none" }}><EditDocumentIcon sx={{ ":hover": { color: "rgb(140, 7, 158)" }, fontSize: "25px" }} /></button>
                                         </td>
                                     </tr>
                                 ))

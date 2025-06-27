@@ -61,12 +61,12 @@ const AddStudent = () => {
     const [ini, setIni] = useState({
         student_name: "",
         stream: "",
+        user: null,
         age: "",
         gender: "",
-        bloodgroup: "",
         address: "",
         contact: "",
-        user: null
+        active_status: ""
 
     })
 
@@ -135,13 +135,14 @@ const AddStudent = () => {
                     viewData()
                     setIni({
                         student_name: "",
+                        stream: "",
+                        user: null,
                         age: "",
                         gender: "",
-                        bloodgroup: "",
                         address: "",
                         contact: "",
-                        user: null,
-                        stream: ""
+                        active_status: ""
+
                     })
 
                 })
