@@ -49,7 +49,6 @@ const Login = () => {
                 console.log(response.data.data._id)
                 localStorage.setItem('token', response.data.data._id)
                 history.push('/home')
-
             }
             )
             .catch((error) => {
