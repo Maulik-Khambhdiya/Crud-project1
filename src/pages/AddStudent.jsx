@@ -136,6 +136,7 @@ const AddStudent = () => {
           console.log("Data Edited");
           setEditId(null);
           viewData();
+          setOpen(flase)
           setIni({
             student_name: "",
             stream: "",
@@ -190,11 +191,13 @@ const AddStudent = () => {
   };
 
   const editData = (item) => {
-    setIni(item);
+    setIni({
+      ...item,
+      stream: item.stream?._id || "", // extract stream ID
+    });
     setEditId(item._id);
     setOpen(true);
   };
-
   return (
     <>
       <Home>
@@ -277,21 +280,28 @@ const AddStudent = () => {
                         sx={{ width: "100%", mb: 2 }}
                       ></Field>
 
-                      <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">
-                          Select Stream
-                        </InputLabel>
-                        <Select
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                          sx={{ width: "100%", mb: 2 }}
-                          label="Stream/Class"
-                        >
-                          {sList.map((item, index) => (
-                            <MenuItem value={item._id}>{item.stream}</MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
+                      <Field name="stream">
+                        {({ field, form }) => (
+                          <FormControl fullWidth sx={{ mb: 2 }}>
+                            <InputLabel id="stream-select-label">Select Stream</InputLabel>
+                            <Select
+                              labelId="stream-select-label"
+                              id="stream-select"
+                              value={field.value || ""}
+                              onChange={(e) => {
+                                form.setFieldValue("stream", e.target.value);
+                              }}
+                              label="Stream"
+                            >
+                              {sList.map((item) => (
+                                <MenuItem key={item._id} value={item._id}>
+                                  {item.stream}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
+                        )}
+                      </Field>
 
                       <Field
                         name="age"
